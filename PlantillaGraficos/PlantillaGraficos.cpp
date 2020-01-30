@@ -12,79 +12,32 @@
 
 using namespace std;
 
-void dibujarLineaContinua(){
-	glBegin(GL_LINE_STRIP);
-	glColor3f(0.1f, 0.3f, 0.75f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.0f, 0.2f, 0.0f);
-	glVertex3f(0.4f, 0.2f, 0.0f);
+float posXTriangulo = 0.0f, posYTriangulo = 0.0f;
 
-	glEnd();
+void actualizar() {
+	posXTriangulo += 0.00001;
 }
-void dibujarLineas(){
-	glBegin(GL_LINES);
-	glColor3f(0.2f, 0.1f, 0.1f);
-	glVertex3f(0.0f, 0.0f, 0.0f);
-	glVertex3f(0.2f, -0.1f, 0.0f);
-	glVertex3f(-0.3f, 0.1f, 0.0f);
-	glVertex3f(-0.3f, -0.1f, 0.0f);
-	glEnd();
-}
-void dibujarTriangulos() {
+
+void dibujarTriangulo() {
+	glPushMatrix();
+
+	glTranslatef(posXTriangulo,posYTriangulo,0.0f);
+
 	glBegin(GL_TRIANGLES);
+    glColor3f(0.2f,0.6f,0.1f);
 
-	//3f--> 3 flotantes 
-	//Se agrega la f para no crear conflictor y especificar double
-	//Establecemos Color
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-0.4f, 0.4f, 0.0f);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.4f, 0.4f, 0.0f);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.4f, -0.4f, 0.0f);
-	////
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(0.4f, -0.4f, 0.0f);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-0.4f, 0.4f, 0.0f);
-	glColor3f(0.0f, 0.0f, 1.0f);
-	glVertex3f(-0.4f, -0.4f, 0.0f);
-	//Especificamos que dejaremos de dibujar 
-	glEnd();
-
-}
-void dibujarTrianContinuo() {
-	glBegin(GL_TRIANGLE_STRIP);
-	glColor3f(1.0f,1.0f,1.0f);
-
-	glVertex3f(0.0f,0.0f,0.0f);
-	glVertex3f(0.1f, 0.1f, 0.0f);
-	glVertex3f(0.2f, 0.0f, 0.0f);
-
-	glColor3f(0.2f, 0.8f, 1.0f);
-
-	glVertex3f(0.0f, 0.15f, 0.0f);
+	glVertex3f(0.0f,0.15f,0.0f);
+	glVertex3f(-0.15f, -0.15f, 0.0f); 
+	glVertex3f(0.15f, -0.15f, 0.0f);
 
 	glEnd();
-}
-void poligonos() {
-	glBegin(GL_POLYGON);
-	//Necesita por lo menos 3v
-	glColor3f(1.0f,0.8f,0.1f);
+	glPopMatrix();
 
-	glVertex3f(0.0f,0.0f,0.0f);
-	glVertex3f(0.0f, 0.5f, 0.0f);
-	glVertex3f(0.2f, 0.3f, 0.0f);
 
-	glColor3f(0.2f, 0.6f, 1.0f);
-	glVertex3f(0.2f, -0.4f, 0.0f);
-	glVertex3f(0.4f, -0.6f, 0.0f);
-
-	glEnd();
 }
 
 void dibujar() {
-	poligonos();
+	dibujarTriangulo();
 }
 //$(ProjectDir)include 
 int main()
@@ -133,7 +86,7 @@ int main()
 		glClearColor(3, 0.8, 0.4, 1);
 		//Borrar
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+		actualizar();
 		dibujar();
 		//Se comunica con los dispositivos de entrada
 		glfwPollEvents();

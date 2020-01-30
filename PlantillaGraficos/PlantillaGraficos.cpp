@@ -15,7 +15,23 @@ using namespace std;
 float posXTriangulo = 0.0f, posYTriangulo = 0.0f;
 
 void actualizar() {
-	posXTriangulo += 0.00001;
+	//posXTriangulo += 0.00001;
+}
+//Para que responda a los eventos del teclado
+void teclado_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
+
+	if ((action == GLFW_PRESS || action == GLFW_REPEAT) && key == GLFW_KEY_RIGHT) {
+		posXTriangulo += 0.01;
+	}
+	else if ((action == GLFW_PRESS || action == GLFW_REPEAT) && key == GLFW_KEY_LEFT) {
+		posXTriangulo -= 0.01;
+	}
+	else if ((action == GLFW_PRESS || action == GLFW_REPEAT) && key == GLFW_KEY_DOWN) {
+		posYTriangulo -= 0.01;
+	}
+	else if ((action == GLFW_PRESS || action == GLFW_REPEAT) && key == GLFW_KEY_LEFT) {
+		posXTriangulo -= 0.01;
+	}
 }
 
 void dibujarTriangulo() {
@@ -76,6 +92,9 @@ int main()
 	const GLubyte  *versionGL = glGetString(GL_VERSION);
 
 	cout << "Version OpenGl: " << versionGL;
+	//Ventana y funcion
+	//Establecemos que con cada evento del teclado se llama a la funcion teclado_callbak
+	glfwSetKeyCallback(window, teclado_callback);
 
 	//Clilo de dibujo (Draw loop)
 	while (!glfwWindowShouldClose(window)) {
